@@ -4,13 +4,10 @@ import {ethers} from "ethers"
 import FileUpload from "./components/FileUpload";
 import Modal from "./components/Modal";
 import Display from "./components/Display";
-
 import './App.css';
 
 function App() {
-  debugger
   const [account, setAccount] = useState("");
-  debugger
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -33,7 +30,7 @@ function App() {
 
         setAccount(address);
 
-        const contractAddress = "{{Your smart contract deploy key}}";
+        const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
         const contract = new ethers.Contract(contractAddress, Upload.abi, provider.getSigner());
 
@@ -48,17 +45,31 @@ function App() {
   }, [provider]);
   
 
-  return <div className="App">
-    <h1 style={{color: "white"}}>Decentlized File System - GDrive 3.0</h1>
-    <div className="bg"></div>
-    <div className="bg bg2"></div>
-    <div className="bg bg3"></div>
+  return ( 
+    <>
+      {!modalOpen && (<button className="share" onClick={()=>setModalOpen(true)}>Share</button>)}{" "}
+      { modalOpen && (<Modal setModalOpen={setModalOpen} contract={contract}></Modal>)}
+      <div className="App">
+        <h1 style={{color: "white"}}>Decentlized File System - GDrive 3.0</h1>
+        <div className="bg"></div>
+        <div className="bg bg2"></div>
+        <div className="bg bg3"></div>
 
-    <p style={{color: "white"}}> Account: { account ? account:"Please connect Metamask"} </p>
+        <p style={{color: "white"}}> Account: { account ? account:"Please connect Metamask"} </p>
 
-    <FileUpload account={account} provider={provider} contract={contract}></FileUpload>
+        <FileUpload 
+        account={account} 
+        provider={provider} 
+        contract={contract}>
+        </FileUpload>
 
-  </div>;
+        <Display
+        contract={contract}
+        account={account}>
+        </Display>
+
+      </div>;
+    </>)
 }
 
 export default App;

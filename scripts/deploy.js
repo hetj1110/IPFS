@@ -9,7 +9,6 @@ async function main() {
   console.log('Smart contract deployed to : ',upload.address);
 }
 
-
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;

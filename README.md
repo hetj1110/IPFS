@@ -6,8 +6,13 @@ Try running some of the following tasks:
 
 ```shell
 npm install
+npx hardhat node
 cd client/
 npm start
-npx hardhat node
+```
+
+
+## Run this when You have to deploy new smartcontract for app
+```shell
 npx hardhat run --network localhost scripts/deploy.js
 ```
